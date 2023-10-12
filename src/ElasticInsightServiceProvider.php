@@ -2,9 +2,9 @@
 
 namespace Ravols\ElasticInsight;
 
+use Ravols\ElasticInsight\Commands\ElasticInsightCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Ravols\ElasticInsight\Commands\ElasticInsightCommand;
 
 class ElasticInsightServiceProvider extends PackageServiceProvider
 {
