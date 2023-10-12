@@ -8,8 +8,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        dd(elasticSearchModuleRavols()->elasticSearchService()->test());
-
         return view('elastic-insight::index');
     }
 }
