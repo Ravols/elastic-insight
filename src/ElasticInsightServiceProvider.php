@@ -15,11 +15,20 @@ class ElasticInsightServiceProvider extends PackageServiceProvider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
+        if (! defined('ELASTIC_INSIGHT_PATH')) {
+            define('ELASTIC_INSIGHT_PATH', realpath(__DIR__.'/../'));
+        }
+
         $package
             ->name('elastic-insight')
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('create_elastic-insight_table')
-            ->hasCommand(ElasticInsightCommand::class);
+            ->hasCommand(ElasticInsightCommand::class)
+            ->hasRoute('web');
+
+        $this->publishes([
+            ELASTIC_INSIGHT_PATH.'/public' => public_path('vendor/elastic-insight'),
+        ], ['elastic-insight-assets']);
     }
 }
