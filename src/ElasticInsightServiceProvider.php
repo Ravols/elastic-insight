@@ -3,6 +3,7 @@
 namespace Ravols\ElasticInsight;
 
 use Ravols\ElasticInsight\Commands\ElasticInsightCommand;
+use Ravols\ElasticInsight\Modules\Elastic\ElasticSearchModule;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -30,5 +31,11 @@ class ElasticInsightServiceProvider extends PackageServiceProvider
         $this->publishes([
             ELASTIC_INSIGHT_PATH.'/public' => public_path('vendor/elastic-insight'),
         ], ['elastic-insight-assets']);
+
+        $this->app->singleton(
+            'elasticInsightElasticSearchModule',
+            ElasticSearchModule::class
+        );
+
     }
 }

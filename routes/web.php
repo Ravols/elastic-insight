@@ -14,5 +14,4 @@ Route::group(['prefix' => 'elastic-insight', 'as' => 'elastic-insight.'], functi
         Route::get('all-aliases', [AllAliasesController::class,'index'])->name('index');
     });
     Route::get('elastic-insight', [DashboardController::class,'index']);
-
 });
