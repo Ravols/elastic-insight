@@ -14,6 +14,7 @@ class ElasticSearchService
 
     public function test(): void
     {
+        dd("Hello from elastic insight!");
     }
 
     public function getClient(): Client
