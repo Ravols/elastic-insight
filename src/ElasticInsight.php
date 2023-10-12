@@ -6,6 +6,6 @@ class ElasticInsight
 {
     public function sayHello(): void
     {
-        dd("hello from elastic insights");
+        dd('hello from elastic insights');
     }
 }
