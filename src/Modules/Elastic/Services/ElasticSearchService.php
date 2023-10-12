@@ -26,17 +26,17 @@ class ElasticSearchService
     private function buildClient(): Client
     {
         $client = ClientBuilder::create()
-        ->setHosts([config('services.elastic.host')])
-        ->setBasicAuthentication(config('services.elastic.login'), config('services.elastic.password'))
-        ->setCABundle(Storage::disk('local')->path(config('services.elastic.cert_path')))
-        ->build();
+            ->setHosts([config('services.elastic.host')])
+            ->setBasicAuthentication(config('services.elastic.login'), config('services.elastic.password'))
+            ->setCABundle(Storage::disk('local')->path(config('services.elastic.cert_path')))
+            ->build();
 
         return $client;
     }
 
     public function getListOfIndicesAliases(string $indexPrefix): Collection
     {
-        $aliasRespone = Http::withoutVerifying()->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))->get(config('services.elastic.host') . '/_cat/aliases?format=JSON');
+        $aliasRespone = Http::withoutVerifying()->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))->get(config('services.elastic.host').'/_cat/aliases?format=JSON');
 
         $indicesInfoCollection = collect(json_decode($aliasRespone->body()));
 
@@ -47,7 +47,7 @@ class ElasticSearchService
 
     public function getListOfIndices(string $indexPrefix): Collection
     {
-        $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))->get(config('services.elastic.host') . '/_cat/indices?format=JSON');
+        $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))->get(config('services.elastic.host').'/_cat/indices?format=JSON');
 
         $indicesInfoCollection = collect(json_decode($indicesResponse->body()));
 
@@ -60,7 +60,7 @@ class ElasticSearchService
     {
         $response = Http::withoutVerifying()
             ->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))
-            ->get(config('services.elastic.host') . '/' . $indexPrefix . '/' . $query . '?format=JSON');
+            ->get(config('services.elastic.host').'/'.$indexPrefix.'/'.$query.'?format=JSON');
 
         $responseCollection = collect(json_decode($response->body()));
 
