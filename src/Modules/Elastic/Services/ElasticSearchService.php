@@ -54,6 +54,8 @@ class ElasticSearchService
 
         $indicesInfoCollection = collect(json_decode($indicesResponse->body()));
 
+        return $indicesInfoCollection;
+
         return $indicesInfoCollection->filter(function ($index) use ($indexPrefix) {
             return str_contains($index->index, $indexPrefix);
         });
