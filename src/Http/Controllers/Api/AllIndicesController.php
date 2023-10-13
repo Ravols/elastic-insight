@@ -8,7 +8,7 @@ class AllIndicesController extends Controller
 {
     public function index()
     {
-        $indices = elasticSearchModuleRavols()->elasticSearchService()->getListOfIndices("colored");
+        $indices = elasticSearchModuleRavols()->elasticSearchService()->getListOfIndices('colored');
 
         return response()->json([
             'data' => $indices,
