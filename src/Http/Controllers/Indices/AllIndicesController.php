@@ -8,9 +8,8 @@ class AllIndicesController extends Controller
 {
     public function index()
     {
-        // dd(elasticSearchModuleRavols()->elasticSearchService());
-        // dd(app()->elasticInsightElasticSearchModule->elasticSearchService()->test());
+        $indices = elasticSearchModuleRavols()->elasticSearchService()->getListOfIndices('colored');
 
-        return view('elastic-insight::indices.all-indices');
+        return view('elastic-insight::indices.all-indices')->with(['indices' => $indices]);
     }
 }

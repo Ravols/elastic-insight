@@ -1,20 +1,7 @@
-import Vue from "vue";
 import "flowbite";
-import axios from "axios";
 
-axios.defaults.baseURL = "/elastic-insight/api/";
-Vue.prototype.$http = axios;
-//Pages
-Vue.component(
-  "page-all-indices",
-  require("./components/pages/allIndices.vue").default
-);
+import Alpine from "alpinejs";
 
-Vue.component(
-  "page-all-aliases",
-  require("./components/pages/allAliases.vue").default
-);
+window.Alpine = Alpine;
 
-const app = new Vue({
-  el: "#app",
-});
+Alpine.start();

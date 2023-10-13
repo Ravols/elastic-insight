@@ -8,6 +8,7 @@
     {{-- <link rel="stylesheet" href="{{ asset(mix('app.css', 'vendor/elastic-insight')) }}"> --}}
     <link rel="stylesheet" href="{{ asset('vendor/elastic-insight/app.css') }}">
     @include('elastic-insight::layout.favicon')
+    <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
 </head>
 
 <body>
@@ -20,7 +21,7 @@
         </div>
     </main>
     {{-- <script src="{{ asset(mix('app.js', 'vendor/elastic-insight')) }}"></script> --}}
-    <script src="{{ asset('vendor/elastic-insight/app.js') }}"></script>
+    <script src="{{ asset('vendor/elastic-insight/app.js') }}" defer></script>
 </body>
 
 </html>
