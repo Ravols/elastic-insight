@@ -26,7 +26,7 @@ class ElasticInsightServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigration('create_elastic-insight_table')
             ->hasCommand(ElasticInsightCommand::class)
-            ->hasRoutes(['web','api']);
+            ->hasRoutes(['web', 'api']);
 
         $this->publishes([
             ELASTIC_INSIGHT_PATH.'/public' => public_path('vendor/elastic-insight'),
