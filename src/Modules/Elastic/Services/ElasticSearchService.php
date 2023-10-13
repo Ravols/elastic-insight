@@ -26,10 +26,11 @@ class ElasticSearchService
 
     private function buildClient(): Client
     {
+        // dd(config('elastic-insight.connection'));
         $client = ClientBuilder::create()
-            ->setHosts([config('services.elastic.host')])
-            ->setBasicAuthentication(config('services.elastic.login'), config('services.elastic.password'))
-            ->setCABundle(Storage::disk('local')->path(config('services.elastic.cert_path')))
+            ->setHosts([config('elastic-insight.connection.host')])
+            ->setBasicAuthentication(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))
+            ->setCABundle(Storage::disk('local')->path(config('elastic-insight.connection.cert_path')))
             ->build();
 
         return $client;
@@ -37,7 +38,7 @@ class ElasticSearchService
 
     public function getListOfIndicesAliases(string $indexPrefix): Collection
     {
-        $aliasRespone = Http::withoutVerifying()->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))->get(config('services.elastic.host').'/_cat/aliases?format=JSON');
+        $aliasRespone = Http::withoutVerifying()->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))->get(config('elastic-insight.connection').'/_cat/aliases?format=JSON');
 
         $indicesInfoCollection = collect(json_decode($aliasRespone->body()));
 
@@ -48,7 +49,8 @@ class ElasticSearchService
 
     public function getListOfIndices(string $indexPrefix): Collection
     {
-        $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))->get(config('services.elastic.host').'/_cat/indices?format=JSON');
+        // $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))->get(config('elastic-insight.connection').'/_cat/indices?format=JSON');
+        $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))->get(config('elastic-insight.connection.host').'/_cat/indices?format=JSON');
 
         $indicesInfoCollection = collect(json_decode($indicesResponse->body()));
 
@@ -60,8 +62,8 @@ class ElasticSearchService
     public function getElasticResponse(string $indexPrefix, string $query): Collection
     {
         $response = Http::withoutVerifying()
-            ->withBasicAuth(config('services.elastic.login'), config('services.elastic.password'))
-            ->get(config('services.elastic.host').'/'.$indexPrefix.'/'.$query.'?format=JSON');
+            ->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))
+            ->get(config('elastic-insight.connection.host').'/'.$indexPrefix.'/'.$query.'?format=JSON');
 
         $responseCollection = collect(json_decode($response->body()));
 

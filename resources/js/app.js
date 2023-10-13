@@ -1,6 +1,9 @@
 import Vue from "vue";
 import "flowbite";
+import axios from "axios";
 
+axios.defaults.baseURL = "/api/";
+Vue.prototype.$http = axios;
 //Pages
 Vue.component(
   "page-all-indices",
