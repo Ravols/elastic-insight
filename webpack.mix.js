@@ -12,7 +12,6 @@ mix
   })
   .setPublicPath("../../../public")
   .js("resources/js/app.js", "public/vendor/elastic-insight")
-  .vue()
   .postCss("resources/css/app.css", "public/vendor/elastic-insight", [
     require("tailwindcss"),
   ])
@@ -32,7 +31,6 @@ mix.disableSuccessNotifications();
 //   })
 //   .setPublicPath("public")
 //   .js("resources/js/app.js", "public")
-//   .vue()
 //   .postCss("resources/css/app.css", "public", [require("tailwindcss")])
 //   .copy("resources/images", "public/images")
 //   .version();
