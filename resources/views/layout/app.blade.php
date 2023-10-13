@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elastic Insight</title>
-    <link rel="stylesheet" href="{{ asset(mix('app.css', 'vendor/elastic-insight')) }}">
+    {{-- <link rel="stylesheet" href="{{ asset(mix('app.css', 'vendor/elastic-insight')) }}"> --}}
+    <link rel="stylesheet" href="{{ asset('vendor/elastic-insight/app.css') }}">
     @include('elastic-insight::layout.favicon')
 </head>
 
@@ -18,7 +19,8 @@
             @yield('content')
         </div>
     </main>
-    <script src="{{ asset(mix('app.js', 'vendor/elastic-insight')) }}"></script>
+    {{-- <script src="{{ asset(mix('app.js', 'vendor/elastic-insight')) }}"></script> --}}
+    <script src="{{ asset('vendor/elastic-insight/app.js') }}"></script>
 </body>
 
 </html>

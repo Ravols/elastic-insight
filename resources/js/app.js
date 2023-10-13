@@ -2,7 +2,7 @@ import Vue from "vue";
 import "flowbite";
 import axios from "axios";
 
-axios.defaults.baseURL = "/api/";
+axios.defaults.baseURL = "/elastic-insight/api/";
 Vue.prototype.$http = axios;
 //Pages
 Vue.component(
