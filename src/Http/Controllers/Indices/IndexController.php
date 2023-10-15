@@ -11,8 +11,8 @@ class IndexController extends Controller
         $response = elasticSearchModuleRavols()->elasticSearchService()->getElasticResponse('colored_products_eshop_2_2023_10_07', '_search');
         $responseFields = [];
 
-        if(isset($response['hits']->hits[0]->_source)) {
-            foreach($response['hits']->hits[0]->_source as $key => $source) {
+        if (isset($response['hits']->hits[0]->_source)) {
+            foreach ($response['hits']->hits[0]->_source as $key => $source) {
                 $responseFields[] = $key;
             }
         }
