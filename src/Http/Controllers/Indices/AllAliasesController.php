@@ -8,6 +8,8 @@ class AllAliasesController extends Controller
 {
     public function index()
     {
-        return view('elastic-insight::indices.all-aliases');
+        $aliases = elasticSearchModuleRavols()->elasticSearchService()->getListOfIndicesAliases();
+
+        return view('elastic-insight::indices.all-aliases')->with(['aliases' => $aliases]);
     }
 }

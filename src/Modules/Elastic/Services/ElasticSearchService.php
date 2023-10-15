@@ -36,11 +36,17 @@ class ElasticSearchService
         return $client;
     }
 
-    public function getListOfIndicesAliases(string $indexPrefix): Collection
+    public function getListOfIndicesAliases(?string $indexPrefix = null): Collection
     {
-        $aliasRespone = Http::withoutVerifying()->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))->get(config('elastic-insight.connection').'/_cat/aliases?format=JSON');
+        $aliasRespone = Http::withoutVerifying()
+                ->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))
+                ->get(config('elastic-insight.connection.host').'/_cat/aliases?format=JSON');
 
         $indicesInfoCollection = collect(json_decode($aliasRespone->body()));
+
+        if(is_null($indexPrefix)) {
+            return $indicesInfoCollection;
+        }
 
         return $indicesInfoCollection->filter(function ($index) use ($indexPrefix) {
             return str_contains($index->index, $indexPrefix);
@@ -50,7 +56,9 @@ class ElasticSearchService
     public function getListOfIndices(string $indexPrefix): Collection
     {
         // $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))->get(config('elastic-insight.connection').'/_cat/indices?format=JSON');
-        $indicesResponse = Http::withoutVerifying()->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))->get(config('elastic-insight.connection.host').'/_cat/indices?format=JSON');
+        $indicesResponse = Http::withoutVerifying()
+                ->withBasicAuth(config('elastic-insight.connection.login'), config('elastic-insight.connection.password'))
+                ->get(config('elastic-insight.connection.host').'/_cat/indices?format=JSON');
 
         $indicesInfoCollection = collect(json_decode($indicesResponse->body()));
 

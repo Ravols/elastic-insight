@@ -20,22 +20,20 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Alias Name</th>
-                        <th scope="col" class="px-6 py-3 text-center">Index Name</th>
-                        <th scope="col" class="px-6 py-3 text-center">Actions</th>
+                        @foreach ($responseFields as $key)
+                            <th scope="col" class="px-6 py-3">{{ $key }}</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
-                    <template x-for="(alias, index) in filterAliases" :key="index">
+                    <template x-for="(hit, index) in hits" :key="index">
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                x-text="alias.alias">
-                            </th>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                x-text="alias.index">
-                            </td>
+                                <template x-for="fieldKey in responseFields" :key="index">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                        x-text="typeof getResponseFieldValue(hit, fieldKey) == 'object' ? JSON.stringify(getResponseFieldValue(hit, fieldKey)) : getResponseFieldValue(hit, fieldKey)">
+                                    </th>
                          
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <button id="dropdownMenuIconHorizontalButton"
                                     x-bind:data-dropdown-toggle="'dropdownDotsHorizontal' + alias.uuid"
                                     class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -53,8 +51,7 @@
                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                         aria-labelledby="dropdownMenuIconHorizontalButton">
                                         <li>
-                                            {{-- <a x-bind:href="'{{ route('elastic-insight.queries.index') }}?index='  + alias.index "
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Query</a> --}}
+                 
                                         </li>
                                     </ul>
                                     <div class="py-2">
@@ -64,38 +61,26 @@
                                     </div>
                                 </div>
 
-                            </td>
+                            </td> --}}
+                            </template>
                         </tr>
                     </template>
                 </tbody>
             </table>
-            <div class="flex justify-end mt-3">
-                <!-- Previous Button -->
-                <span x-on:click="currentPage--"
-                    class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                    Previous
-                </span>
-                <!-- Next Button -->
-                <span x-on:click="currentPage++"
-                    class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                    Next
-                </span>
-            </div>
+          
         </div>
     </div>
     <script>
         function setup() {
             return {
-                aliases: @js($aliases),
+                hits: @js($response['hits']->hits),
+                responseFields: @js($responseFields),
                 searchInput: '',
                 currentPage: 1,
                 perPage: 10,
-                filterAliases() {
-                    // console.log(this.aliases);
-                    return this.aliases.filter(alias => alias.alias.includes(this.searchInput)).slice((this.currentPage *
-                            this.perPage) - this.perPage,
-                        this.perPage * this.currentPage)
-                }
+                getResponseFieldValue(hit, key){
+                    return hit['_source'][key];
+                },
             }
         }
     </script>
